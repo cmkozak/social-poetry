@@ -4,6 +4,12 @@
       <h2>Register</h2>
       <div class="inputs">
         <input
+          id="name"
+          v-model="register.name"
+          placeholder="Display Name"
+          required
+        />
+        <input
           id="email"
           v-model="register.email"
           placeholder="Email"
@@ -17,9 +23,7 @@
           required
         />
       </div>
-      <p>
-        Already have an account? <NuxtLink to="/login">Sign In</NuxtLink>
-      </p>
+      <p>Already have an account? <NuxtLink to="/login">Sign In</NuxtLink></p>
       <button class="register-btn" type="submit">Register</button>
     </form>
   </div>
@@ -31,6 +35,7 @@ export default {
   data() {
     return {
       register: {
+        name: '',
         email: '',
         password: '',
       },
@@ -95,8 +100,9 @@ h2 {
   input {
     padding: 5px;
     font-size: 14px;
+    margin-top: 15px;
     &:last-child {
-      margin-top: 20px;
+      margin-bottom: 10px;
     }
   }
 }

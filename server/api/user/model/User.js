@@ -1,25 +1,40 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const userSchema = mongoose.Schema({
-  email: {
-    type: String,
-    unique: true,
-    required: [true, "Please Include your Email"],
-  },
-  password: {
-    type: String,
-    required: [true, "Please Include your Password"],
-  },
-  tokens: [
-    {
-      token: {
-        type: String,
-        required: true,
-      },
+const userSchema = mongoose.Schema(
+  {
+    email: {
+      type: String,
+      unique: true,
+      required: [true, "Please Include your Email"],
     },
-  ],
-});
+    password: {
+      type: String,
+      required: [true, "Please Include your Password"],
+    },
+    name: {
+      type: String,
+      required: [true, "Please include a Display Name"],
+    },
+    bio: {
+      type: String,
+      required: false,
+    },
+    country: {
+      type: String,
+      required: false,
+    },
+    tokens: [
+      {
+        token: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
 //this method will hash the password before saving the user model
 userSchema.pre("save", async function (next) {
@@ -33,10 +48,7 @@ userSchema.pre("save", async function (next) {
 //this method generates an auth token for the user
 userSchema.methods.generateAuthToken = async function () {
   const user = this;
-  const token = jwt.sign(
-    { _id: user._id, email: user.email },
-    "secret"
-  );
+  const token = jwt.sign({ _id: user._id, email: user.email }, "secret");
   user.tokens = user.tokens.concat({ token });
   await user.save();
   return token;
