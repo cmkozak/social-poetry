@@ -5,23 +5,37 @@
       <div class="inputs">
         <input
           id="name"
-          v-model="register.name"
+          v-model.trim="register.name"
           placeholder="Display Name"
-          required
         />
-        <input
-          id="email"
-          v-model="register.email"
-          placeholder="Email"
-          required
-        />
+        <div v-if="!$v.register.name.required && submitted" class="error">
+          Name is required
+        </div>
+        <div v-if="!$v.register.name.minLength && submitted" class="error">
+          Name must be longer than 4 characters
+        </div>
+        <div v-if="!$v.register.name.maxLength && submitted" class="error">
+          Name must not be longer than 50 characters
+        </div>
+        <input id="email" v-model="register.email" placeholder="Email" />
+        <div v-if="!$v.register.email.required && submitted" class="error">
+          Email is required
+        </div>
+        <div v-if="!$v.register.email.email && submitted" class="error">
+          Please enter a valid email
+        </div>
         <input
           id="password"
           v-model="register.password"
           type="password"
           placeholder="Password"
-          required
         />
+        <div v-if="!$v.register.password.required && submitted" class="error">
+          Password is required
+        </div>
+        <div v-if="!$v.register.password.minLength && submitted" class="error">
+          Password must be longer than 6 characters
+        </div>
       </div>
       <p>Already have an account? <NuxtLink to="/login">Sign In</NuxtLink></p>
       <button class="register-btn" type="submit">Register</button>
@@ -31,6 +45,13 @@
 <script>
 import swal from 'sweetalert';
 import axios from 'axios';
+import {
+  required,
+  minLength,
+  maxLength,
+  email,
+} from 'vuelidate/lib/validators';
+
 export default {
   data() {
     return {
@@ -39,10 +60,31 @@ export default {
         email: '',
         password: '',
       },
+      submitted: false,
     };
+  },
+  validations: {
+    register: {
+      name: {
+        required,
+        minLength: minLength(4),
+        maxLength: maxLength(50),
+      },
+      email: {
+        required,
+        email,
+      },
+      password: {
+        required,
+        minLength: minLength(6),
+      },
+    },
   },
   methods: {
     async registerUser() {
+      this.$v.$touch();
+      this.submitted = true;
+      if (this.$v.$invalid) return;
       try {
         const response = await axios.post(
           'http://localhost:4000/user/register',
@@ -73,13 +115,13 @@ export default {
   margin: auto;
   text-align: center;
   background-color: #2e2e2e;
-  height: 400px;
+  height: 350px;
   width: 400px;
   padding: 20px;
 }
 
 h2 {
-  font-size: 60px;
+  font-size: 50px;
   margin: 0;
   font-weight: bold;
 }
@@ -118,5 +160,11 @@ h2 {
   &:hover {
     cursor: pointer;
   }
+}
+
+.error {
+  font-size: 14px;
+  margin-top: 2px;
+  color: red;
 }
 </style>

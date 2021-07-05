@@ -3,18 +3,19 @@
     <form id="login-form" @submit.prevent="loginUser">
       <h2>Log In</h2>
       <div class="inputs">
-        <input
-          id="email"
-          v-model="login.email"
-          type="text"
-          placeholder="Email"
-        />
+        <input id="email" v-model="login.email" placeholder="Email" />
+        <div v-if="!$v.login.email.required && submitted" class="error">
+          Email is required
+        </div>
         <input
           id="password"
           v-model="login.password"
           type="password"
           placeholder="Password"
         />
+        <div v-if="!$v.login.password.required && submitted" class="error">
+          Password is required
+        </div>
       </div>
       <p>
         Dont have an account?
@@ -27,6 +28,8 @@
 <script>
 import swal from 'sweetalert';
 import axios from 'axios';
+import { required } from 'vuelidate/lib/validators';
+
 export default {
   data() {
     return {
@@ -34,10 +37,24 @@ export default {
         email: '',
         password: '',
       },
+      submitted: false,
     };
+  },
+  validations: {
+    login: {
+      email: {
+        required,
+      },
+      password: {
+        required,
+      },
+    },
   },
   methods: {
     async loginUser() {
+      this.$v.$touch();
+      this.submitted = true;
+      if (this.$v.$invalid) return;
       try {
         const response = await axios.post(
           'http://localhost:4000/user/login',
@@ -61,13 +78,13 @@ export default {
   margin: auto;
   text-align: center;
   background-color: #2e2e2e;
-  height: 400px;
+  height: 300px;
   width: 400px;
   padding: 20px;
 }
 
 h2 {
-  font-size: 60px;
+  font-size: 50px;
   margin: 0;
   font-weight: bold;
 }
@@ -88,8 +105,9 @@ h2 {
   input {
     padding: 5px;
     font-size: 14px;
+    margin-top: 15px;
     &:last-child {
-      margin-top: 20px;
+      margin-bottom: 10px;
     }
   }
 }
@@ -105,5 +123,11 @@ h2 {
   &:hover {
     cursor: pointer;
   }
+}
+
+.error {
+  font-size: 14px;
+  margin-top: 2px;
+  color: red;
 }
 </style>
