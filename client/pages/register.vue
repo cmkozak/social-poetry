@@ -5,7 +5,7 @@
       <div class="inputs">
         <input
           id="name"
-          v-model.trim="register.name"
+          v-model="register.name"
           placeholder="Display Name"
         />
         <div v-if="!$v.register.name.required && submitted" class="error">
