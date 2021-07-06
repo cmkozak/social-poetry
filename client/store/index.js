@@ -1,3 +1,1 @@
-export const state = () => ({
-  loggedIn: false,
-});
+export const state = () => ({});

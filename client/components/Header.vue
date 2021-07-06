@@ -1,7 +1,8 @@
 <template>
   <nav id="header">
-    <NuxtLink v-if="$store.state.loggedIn" to="/profile">Profile</NuxtLink>
+    <NuxtLink v-if="$auth.loggedIn" to="/profile">Profile</NuxtLink>
     <NuxtLink v-else to="/login">Login</NuxtLink>
+    {{$auth.user}}
     <NuxtLink to="/">Home</NuxtLink>
   </nav>
 </template>

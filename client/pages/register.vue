@@ -3,11 +3,7 @@
     <form id="register-form" @submit.prevent="registerUser">
       <h2>Register</h2>
       <div class="inputs">
-        <input
-          id="name"
-          v-model="register.name"
-          placeholder="Display Name"
-        />
+        <input id="name" v-model="register.name" placeholder="Display Name" />
         <div v-if="!$v.register.name.required && submitted" class="error">
           Name is required
         </div>
@@ -85,26 +81,23 @@ export default {
       this.$v.$touch();
       this.submitted = true;
       if (this.$v.$invalid) return;
-      try {
-        const response = await axios.post(
-          'http://localhost:4000/user/register',
-          this.register
-        );
-        const token = response.data.token;
-        if (token) {
-          localStorage.setItem('jwt', token);
-          swal('Success', 'Registration Was successful', 'success');
-        } else {
-          swal('Error', 'Something Went Wrong', 'error');
-        }
-      } catch (err) {
-        const error = err.response;
-        if (error.status === 409) {
-          swal('Error', error.data.message, 'error');
-        } else {
-          swal('Error', error.data.err.message, 'error');
-        }
-      }
+      await axios
+        .post('http://localhost:4000/user/register', this.register)
+        .then(() => {
+          this.$auth.loginWith('local', {
+            data: this.register,
+          });
+        })
+        .then(() => {
+          swal('Success', 'Login Successful', 'success');
+        })
+        .catch((error) => {
+          if (error.status === 409) {
+            swal('Error', error.data.message, 'error');
+          } else {
+            swal('Error', error.data.err.message, 'error');
+          }
+        });
     },
   },
 };

@@ -8,8 +8,7 @@ exports.registerNewUser = async (req, res) => {
       name: req.body.name,
     });
     let data = await user.save();
-    const token = await user.generateAuthToken();
-    res.status(201).json({ data, token });
+    res.status(201).json({ data });
   } catch (err) {
     res.status(400).json({ err: err });
   }

@@ -27,7 +27,6 @@
 </template>
 <script>
 import swal from 'sweetalert';
-import axios from 'axios';
 import { required } from 'vuelidate/lib/validators';
 
 export default {
@@ -55,19 +54,16 @@ export default {
       this.$v.$touch();
       this.submitted = true;
       if (this.$v.$invalid) return;
-      try {
-        const response = await axios.post(
-          'http://localhost:4000/user/login',
-          this.login
-        );
-        const token = response.data.token;
-        localStorage.setItem('jwt', token);
-        if (token) {
+      await this.$auth
+        .loginWith('local', {
+          data: this.login,
+        })
+        .then(() => {
           swal('Success', 'Login Successful', 'success');
-        }
-      } catch (err) {
-        swal('Error', 'Something Went Wrong', 'error');
-      }
+        })
+        .catch(() => {
+          swal('Error', 'Something Went Wrong', 'error');
+        });
     },
   },
 };

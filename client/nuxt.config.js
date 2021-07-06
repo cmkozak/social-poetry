@@ -42,11 +42,10 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth',
   ],
 
-  router: {
-    middleware: 'auth',
-  },
+  router: {},
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
@@ -55,4 +54,17 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/user/login', method: 'post', propertyName: 'token' },
+          logout: false,
+          user: { url: '/user/me', method: 'get', propertyName: false},
+        },
+        tokenType: '',
+      },
+    },
+  },
 };
