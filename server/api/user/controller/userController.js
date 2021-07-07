@@ -7,12 +7,13 @@ exports.registerNewUser = async (req, res) => {
       password: req.body.password,
       name: req.body.name,
     });
-    let data = await user.save();
+    const data = await user.save();
     res.status(201).json({ data });
   } catch (err) {
     res.status(400).json({ err: err });
   }
 };
+
 exports.loginUser = async (req, res) => {
   try {
     const email = req.body.email;
@@ -29,6 +30,7 @@ exports.loginUser = async (req, res) => {
     res.status(400).json({ err: err });
   }
 };
+
 exports.getUserDetails = async (req, res) => {
   await res.json(req.userData);
 };

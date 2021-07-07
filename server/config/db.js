@@ -1,3 +1,3 @@
 module.exports = {
-    database: "mongodb://localhost:27017/social-poetry",
-  };
+  database: "mongodb://localhost:27017/social-poetry",
+};
