@@ -40,7 +40,6 @@
 </template>
 <script>
 import swal from 'sweetalert';
-import axios from 'axios';
 import {
   required,
   minLength,
@@ -81,8 +80,8 @@ export default {
       this.$v.$touch();
       this.submitted = true;
       if (this.$v.$invalid) return;
-      await axios
-        .post('http://localhost:4000/user/register', this.register)
+      await this.$axios
+        .post('/user/register', this.register)
         .then(() => {
           this.$auth.loginWith('local', {
             data: this.register,

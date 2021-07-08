@@ -1,32 +1,13 @@
 <template>
-  <div></div>
+  <div>
+    <PostForm v-if="$auth.loggedIn" />
+  </div>
 </template>
 
 <script>
-import VueJwtDecode from 'vue-jwt-decode';
+import PostForm from '../components/PostForm.vue';
 export default {
-  data() {
-    return {
-      user: {},
-    };
-  },
-  created() {
-    this.getUserDetails();
-  },
-  methods: {
-    getUserDetails() {
-      if (process.browser) {
-        const token = localStorage.getItem('jwt') || '';
-        const decoded = VueJwtDecode.decode(token);
-        this.user = decoded;
-      }
-    },
-    logUserOut() {
-      if (process.browser) {
-        localStorage.removeItem('jwt');
-      }
-    },
-  },
+  components: { PostForm },
 };
 </script>
 
