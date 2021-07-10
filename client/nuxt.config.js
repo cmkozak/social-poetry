@@ -60,8 +60,8 @@ export default {
       local: {
         endpoints: {
           login: { url: '/user/login', method: 'post', propertyName: 'token' },
-          logout: false,
-          user: { url: '/user/me', method: 'get', propertyName: false},
+          logout: true, // {url: '/user/logout', method: 'delete'},
+          user: { url: '/user/me', method: 'get', propertyName: false },
         },
         tokenType: '',
       },

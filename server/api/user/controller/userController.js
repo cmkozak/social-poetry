@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const User = require("../model/User");
 
 exports.registerNewUser = async (req, res) => {
@@ -33,4 +34,8 @@ exports.loginUser = async (req, res) => {
 
 exports.getUserDetails = async (req, res) => {
   await res.json(req.userData);
+};
+
+exports.logoutUser = async (req, res) => {
+  // TODO destroy token in database
 };
