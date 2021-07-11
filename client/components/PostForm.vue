@@ -111,7 +111,7 @@ h2 {
 }
 
 .content-input {
-  height: 300px;
+  height: 200px;
 }
 
 .submit {

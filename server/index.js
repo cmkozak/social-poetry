@@ -22,10 +22,10 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 const userRoutes = require("./api/user/route/user");
-app.use("/user", userRoutes);
+app.use("/api/user", userRoutes);
 
 const postRoutes = require("./api/posts/route/post");
-app.use("/post", postRoutes);
+app.use("/api/post", postRoutes);
 
 app.listen(PORT, () => {
   console.log(`App is running on ${PORT}`);

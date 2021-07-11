@@ -2,7 +2,7 @@
   <nav id="header">
     <div v-if="$auth.loggedIn">
       <LogoutButton />
-      <NuxtLink to="/profile">Profile</NuxtLink>
+      <NuxtLink :to="`/user/${$auth.user._id}`">Profile</NuxtLink>
     </div>
     <NuxtLink v-else to="/login">Login</NuxtLink>
     {{ $auth.user }}
@@ -11,10 +11,6 @@
 </template>
 
 <script>
-import LogoutButton from './LogoutButton.vue';
-export default {
-  components: { LogoutButton },
-};
 </script>
 
 <style lang="scss" scoped>

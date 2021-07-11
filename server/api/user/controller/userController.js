@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const User = require("../model/User");
 
 exports.registerNewUser = async (req, res) => {
@@ -38,4 +37,15 @@ exports.getUserDetails = async (req, res) => {
 
 exports.logoutUser = async (req, res) => {
   // TODO destroy token in database
+};
+
+exports.getUserInfo = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id)
+      .select("name bio country")
+      .lean();
+    res.json({ user });
+  } catch (err) {
+    res.status(404).json({ err: err });
+  }
 };
