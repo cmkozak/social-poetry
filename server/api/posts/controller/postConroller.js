@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Post = require("../model/Post");
 
 exports.getPost = async (req, res) => {
@@ -11,12 +12,17 @@ exports.getAllPosts = async (req, res) => {
 };
 
 exports.getPostsByUser = async (req, res) => {
-  const data = await Post.find({
-    user: mongoose.Types.ObjectId(req.body.user),
-  })
-    .sort({ createdAt: -1 })
-    .lean();
-  res.json({ data });
+  try {
+    const data = await Post.find({
+      user: mongoose.Types.ObjectId(req.params.id),
+    })
+      .select("title content createdAt")
+      .sort({ createdAt: -1 })
+      .lean();
+    res.json({ data });
+  } catch (err) {
+    res.status(404).json({ err: err });
+  }
 };
 
 exports.createPost = async (req, res) => {

@@ -38,7 +38,7 @@ export default {
       post: {
         title: '',
         content: '',
-        user: this.$auth.user.id,
+        user: this.$auth.user._id,
       },
       submitted: false,
     };

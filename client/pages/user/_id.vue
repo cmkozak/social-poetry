@@ -7,6 +7,12 @@
     </div>
     <div class="posts">
       <PostForm />
+      <PostCard
+        v-for="post in posts.data"
+        :key="post.id"
+        :user="user"
+        :post="post"
+      />
     </div>
   </div>
 </template>
@@ -22,6 +28,7 @@ export default {
         bio: '',
         country: '',
       },
+      posts: {},
     };
   },
   async created() {
@@ -33,6 +40,12 @@ export default {
       .catch((error) => {
         this.$router.back();
         swal('Error', error.message, 'error');
+      });
+    await this.$axios
+      .get(`/post/getPostsByUser/${this.id}`)
+      .then((response) => (this.posts = response.data))
+      .catch((error) => {
+        swal('Error', error.data.message, 'error');
       });
   },
 };
