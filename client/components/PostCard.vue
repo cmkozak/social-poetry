@@ -1,5 +1,12 @@
 <template>
   <div class="post">
+    <div
+      v-if="user._id === $auth.user._id"
+      class="delete"
+      @click="deletePost(post._id)"
+    >
+      <img src="../static/trashcan.png" alt="delete post" />
+    </div>
     <div class="top-info">
       <div class="top-content">
         <div class="name">
@@ -13,13 +20,14 @@
         {{ post.title }}
       </div>
     </div>
-    <hr>
+    <hr />
     <div class="content" v-html="post.content"></div>
   </div>
 </template>
 
 <script>
 import moment from 'moment';
+import swal from 'sweetalert';
 export default {
   props: {
     post: {
@@ -35,6 +43,19 @@ export default {
     formatDate(date) {
       return moment.utc(date).local().format('dddd, MMM Do YYYY');
     },
+    async deletePost(id) {
+      if (confirm('Are you sure you want to delete this post?')) {
+        const userId = this.$auth.user._id;
+        await this.$axios
+          .delete('/post/deletePost', { data: { id, userId } })
+          .then(() => {
+            swal('Success', 'Post Deleted', 'success');
+          })
+          .catch((error) => {
+            swal('Error', error.data.message, 'error');
+          });
+      }
+    },
   },
 };
 </script>
@@ -45,9 +66,9 @@ export default {
   width: 100%;
   border-radius: 1vw;
   padding: 20px;
-  border: 1px solid rgb(63, 63, 63);
+  border: 1px solid #3f3f3f;
   background-color: #222222;
-  box-shadow: -1px 1px 1px rgb(63, 63, 63);
+  box-shadow: -1px 1px 1px #3f3f3f;
   font-size: 18px;
 }
 
@@ -72,5 +93,12 @@ export default {
 
 .content {
   margin-top: 20px;
+}
+
+.delete {
+  float: right;
+  img {
+    width: 15px;
+  }
 }
 </style>
