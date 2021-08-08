@@ -39,6 +39,7 @@ export default {
         title: '',
         content: '',
         user: this.$auth.user._id,
+        userToken: '',
       },
       submitted: false,
     };
@@ -55,6 +56,9 @@ export default {
       },
     },
   },
+  mounted() {
+    this.post.userToken = localStorage["auth._token.local"];
+  },
   methods: {
     async createPost() {
       await this.$axios
@@ -63,7 +67,7 @@ export default {
           swal('Success', 'Post Creation Successful', 'success');
         })
         .catch((error) => {
-          swal('Error', error.data.message, 'error');
+          swal('Error', error.message , 'error');
         });
     },
   },

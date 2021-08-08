@@ -6,7 +6,7 @@
       <div id="country">{{ user.country }}</div>
     </div>
     <div class="posts">
-      <PostForm />
+      <PostForm v-if="$auth.loggedIn && $auth.user._id === this.id" />
       <PostCard
         v-for="post in posts.data"
         :key="post.id"

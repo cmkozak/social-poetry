@@ -1,7 +1,7 @@
 <template>
   <div class="post">
     <div
-      v-if="user._id === $auth.user._id"
+      v-if="$auth.loggedIn && user._id === $auth.user._id"
       class="delete"
       @click="deletePost(post._id)"
     >
@@ -45,9 +45,9 @@ export default {
     },
     async deletePost(id) {
       if (confirm('Are you sure you want to delete this post?')) {
-        const userId = this.$auth.user._id;
+        const userToken = localStorage["auth._token.local"];
         await this.$axios
-          .delete('/post/deletePost', { data: { id, userId } })
+          .delete('/post/deletePost', { data: { id, userToken } })
           .then(() => {
             swal('Success', 'Post Deleted', 'success');
           })
