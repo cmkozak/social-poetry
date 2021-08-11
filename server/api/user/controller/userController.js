@@ -44,7 +44,22 @@ exports.getUserInfo = async (req, res) => {
     const user = await User.findById(req.params.id)
       .select("name bio country")
       .lean();
-    res.json({ user });
+    res.status(201).json({ user });
+  } catch (err) {
+    res.status(404).json({ err: err });
+  }
+};
+
+exports.getUserSettings = async (req, res) => {
+  try {
+    const user = await User.findOne({
+      "tokens.token": req.query.userToken,
+    });
+    if (user && user.id == req.query.userId) {
+      res.status(201).json({ user });
+    } else {
+      res.status(401).json({ err: "Invalid credentials" });
+    }
   } catch (err) {
     res.status(404).json({ err: err });
   }

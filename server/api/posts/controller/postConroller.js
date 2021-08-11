@@ -77,13 +77,11 @@ exports.deletePost = async (req, res) => {
     const user = await User.findOne({
       "tokens.token": req.body.userToken,
     });
-    if (user.id == post.user) {
+    if (user && user.id == post.user) {
       const data = post.remove();
       res.status(200).json({ data });
     } else {
-      res
-        .status(401)
-        .json({ err: "You must be the post creator to remove post" });
+      res.status(401).json({ err: "Invalid credentials" });
     }
   } catch (err) {
     res.status(400).json({ err: err });

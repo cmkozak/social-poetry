@@ -12,6 +12,6 @@ module.exports = {
   plugins: [],
   // add your custom rules here
   rules: {
-    'no-v-html': 0,
+    'vue/no-v-html': 0,
   },
 };
