@@ -1,28 +1,30 @@
 <template>
-  <div class="post">
-    <div
-      v-if="$auth.loggedIn && user._id === $auth.user._id"
-      class="delete"
-      @click="deletePost(post._id)"
-    >
-      <img src="../static/trashcan.png" alt="delete post" />
-    </div>
-    <div class="top-info">
-      <div class="top-content">
-        <div class="name">
-          {{ user.name }}
+  <a :href="`/post/${post._id}`">
+    <div class="post">
+      <div
+        v-if="$auth.loggedIn && user._id === $auth.user._id"
+        class="delete"
+        @click="deletePost(post._id)"
+      >
+        <img src="../static/trashcan.png" alt="delete post" />
+      </div>
+      <div class="top-info">
+        <div class="top-content">
+          <div class="name">
+            {{ user.name }}
+          </div>
+          <div class="date">
+            {{ formatDate(post.createdAt) }}
+          </div>
         </div>
-        <div class="date">
-          {{ formatDate(post.createdAt) }}
+        <div class="title">
+          {{ post.title }}
         </div>
       </div>
-      <div class="title">
-        {{ post.title }}
-      </div>
+      <hr />
+      <div class="content" v-html="post.content"></div>
     </div>
-    <hr />
-    <div class="content" v-html="post.content"></div>
-  </div>
+  </a>
 </template>
 
 <script>
@@ -45,7 +47,7 @@ export default {
     },
     async deletePost(id) {
       if (confirm('Are you sure you want to delete this post?')) {
-        const userToken = localStorage["auth._token.local"];
+        const userToken = localStorage['auth._token.local'];
         await this.$axios
           .delete('/post/deletePost', { data: { id, userToken } })
           .then(() => {

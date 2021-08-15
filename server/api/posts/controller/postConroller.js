@@ -3,10 +3,8 @@ const Post = require("../model/Post");
 const User = require("../../user/model/User");
 
 exports.getPost = async (req, res) => {
-  const data = await Post.findById(req.body.id)
-    .select("title content createdAt")
-    .lean();
-  res.json({ data });
+  const post = await Post.findById(req.params.id).lean();
+  res.json({ post });
 };
 
 exports.getAllPosts = async (req, res) => {
