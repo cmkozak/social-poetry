@@ -57,7 +57,7 @@ export default {
     },
   },
   mounted() {
-    this.post.userToken = localStorage["auth._token.local"];
+    this.post.userToken = localStorage['auth._token.local'];
   },
   methods: {
     async createPost() {
@@ -67,7 +67,7 @@ export default {
           swal('Success', 'Post Creation Successful', 'success');
         })
         .catch((error) => {
-          swal('Error', error.message , 'error');
+          swal('Error', error.message, 'error');
         });
     },
   },

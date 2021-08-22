@@ -1,14 +1,9 @@
 <template>
   <div>
-    <PostForm v-if="$auth.loggedIn" />
+    <NuxtLink v-if="$auth.loggedIn" to="/post/new">Create New Post</NuxtLink>
   </div>
 </template>
 
-<script>
-import PostForm from '../components/PostForm.vue';
-export default {
-  components: { PostForm },
-};
-</script>
+<script></script>
 
 <style scoped></style>

@@ -6,7 +6,11 @@
       <div id="country">{{ user.country }}</div>
     </div>
     <div class="posts">
-      <PostForm v-if="$auth.loggedIn && $auth.user._id === this.id" />
+      <NuxtLink
+        v-if="$auth.loggedIn && $auth.user._id === id"
+        to="/post/new"
+        >Create New Post</NuxtLink
+      >
       <PostCard
         v-for="post in posts.data"
         :key="post.id"
