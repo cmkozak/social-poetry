@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const Post = require("../model/Post");
-const User = require("../../user/model/User");
+const Post = require("../models/Post");
+const User = require("../models/User");
 
 exports.getPost = async (req, res) => {
   const post = await Post.findById(req.params.id).lean();

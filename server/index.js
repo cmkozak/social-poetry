@@ -21,10 +21,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(morgan("dev"));
 
-const userRoutes = require("./api/user/route/user");
+const userRoutes = require("./api/routes/user");
 app.use("/api/user", userRoutes);
 
-const postRoutes = require("./api/posts/route/post");
+const postRoutes = require("./api/routes/post");
 app.use("/api/post", postRoutes);
 
 app.listen(PORT, () => {

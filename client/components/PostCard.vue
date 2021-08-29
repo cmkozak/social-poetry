@@ -1,5 +1,5 @@
 <template>
-  <a :href="`/post/${post._id}`" style="text-decoration: none;">
+  <a :href="`/post/${post._id}`" style="text-decoration: none">
     <div class="post">
       <div
         v-if="$auth.loggedIn && user._id === $auth.user._id"
