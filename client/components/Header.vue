@@ -15,6 +15,7 @@ export default {
   methods: {
     logoutUser() {
       this.$auth.logout();
+      this.$toast.success("User Successfully Logged Out");
     },
   },
 };

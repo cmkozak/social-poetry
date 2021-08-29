@@ -39,7 +39,6 @@
   </div>
 </template>
 <script>
-import swal from 'sweetalert';
 import {
   required,
   minLength,
@@ -88,14 +87,10 @@ export default {
           });
         })
         .then(() => {
-          swal('Success', 'Login Successful', 'success');
+          this.$toast.success('User Registerted Successfully');
         })
         .catch((error) => {
-          if (error.status === 409) {
-            swal('Error', error.data.message, 'error');
-          } else {
-            swal('Error', error.data.err.message, 'error');
-          }
+          this.$toast.error(error.message);
         });
     },
   },

@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import swal from 'sweetalert';
 import formatDateMixin from '../mixins/formatdate';
 
 export default {
@@ -50,10 +49,10 @@ export default {
         await this.$axios
           .delete('/post/deletePost', { data: { id, userToken } })
           .then(() => {
-            swal('Success', 'Post Deleted', 'success');
+            this.$toast.success('Post Deleted');
           })
           .catch((error) => {
-            swal('Error', error.data.message, 'error');
+            this.$toast.error(error.data.message);
           });
       }
     },

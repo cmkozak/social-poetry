@@ -43,6 +43,18 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth',
+    [
+      'vue-toastification/nuxt',
+      {
+        position: 'bottom-left',
+        timeout: 5000,
+        closeOnClick: true,
+        pauseOnFocusLoss: false,
+        pauseOnHover: false,
+        draggable: false,
+        closeButton: 'button',
+      },
+    ],
   ],
 
   router: {},

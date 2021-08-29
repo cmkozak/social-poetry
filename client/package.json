@@ -20,8 +20,8 @@
     "node-sass": "^6.0.1",
     "nuxt": "^2.15.7",
     "sass-loader": "^10.2.0",
-    "sweetalert": "^2.1.2",
     "vue-jwt-decode": "^0.1.0",
+    "vue-toastification": "^1.7.11",
     "vuelidate": "^0.7.6"
   },
   "devDependencies": {

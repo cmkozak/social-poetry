@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import swal from 'sweetalert';
 export default {
   data() {
     return {
@@ -35,7 +34,7 @@ export default {
         this.user = response.data.user;
       })
       .catch((error) => {
-        swal('Error', error.message, 'error');
+        this.$toast.error(error.message);
       });
   },
   methods: {
@@ -44,10 +43,10 @@ export default {
       await this.$axios
         .patch('/user/updateuser', { data: this.user, userToken })
         .then(() => {
-          swal('Success', 'User updated', 'success');
+          this.$toast.success('User Updated');
         })
         .catch((error) => {
-          swal('Error', error.data.message, 'error');
+          this.$toast.error(error.message);
         });
     },
   },

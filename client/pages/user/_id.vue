@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import swal from 'sweetalert';
 export default {
   data() {
     return {
@@ -46,14 +45,14 @@ export default {
         this.user = response.data.user;
       })
       .catch((error) => {
+        this.$toast.error(error.message);
         this.$router.back();
-        swal('Error', error.message, 'error');
       });
     await this.$axios
       .get(`/post/getPostsByUser/${this.id}`)
       .then((response) => (this.posts = response.data))
       .catch((error) => {
-        swal('Error', error.data.message, 'error');
+        this.$toast.error(error.message);
       });
   },
 };

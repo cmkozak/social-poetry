@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import swal from 'sweetalert';
 import { required, minLength, maxLength } from 'vuelidate/lib/validators';
 
 export default {
@@ -64,10 +63,10 @@ export default {
       await this.$axios
         .post('/post/createPost', this.post)
         .then(() => {
-          swal('Success', 'Post Creation Successful', 'success');
+          this.$toast.success('Post Creation Successful');
         })
         .catch((error) => {
-          swal('Error', error.message, 'error');
+          this.$toast.error(error.message);
         });
     },
   },

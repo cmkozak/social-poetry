@@ -26,7 +26,6 @@
   </div>
 </template>
 <script>
-import swal from 'sweetalert';
 import { required } from 'vuelidate/lib/validators';
 
 export default {
@@ -59,10 +58,10 @@ export default {
           data: this.login,
         })
         .then(() => {
-          swal('Success', 'Login Successful', 'success');
+          this.$toast.success('Login Successful');
         })
-        .catch(() => {
-          swal('Error', 'Something Went Wrong', 'error');
+        .catch((error) => {
+          this.$toast.error(error.message);
         });
     },
   },

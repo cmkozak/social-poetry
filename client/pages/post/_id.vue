@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import swal from 'sweetalert';
 export default {
   data() {
     return {
@@ -20,7 +19,7 @@ export default {
         this.post = response.data.post;
       })
       .catch((error) => {
-        swal('Error', error.message, 'error');
+        this.$toast.error(error.message);
       });
   },
 };
