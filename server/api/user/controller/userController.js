@@ -54,9 +54,28 @@ exports.getUserSettings = async (req, res) => {
   try {
     const user = await User.findOne({
       "tokens.token": req.query.userToken,
-    });
+    }).select("email name bio country");
     if (user && user.id == req.query.userId) {
       res.status(201).json({ user });
+    } else {
+      res.status(401).json({ err: "Invalid credentials" });
+    }
+  } catch (err) {
+    res.status(404).json({ err: err });
+  }
+};
+
+exports.updateUser = async (req, res) => {
+  try {
+    const user = await User.findOne({
+      "tokens.token": req.body.userToken,
+    }).select("id");
+    if (user && user._id == req.body.data._id) {
+      const userUpdate = await User.findOneAndUpdate(
+        req.body.data._id,
+        req.body.data
+      );
+      res.status(201).json({ userUpdate });
     } else {
       res.status(401).json({ err: "Invalid credentials" });
     }

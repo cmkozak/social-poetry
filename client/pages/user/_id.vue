@@ -4,11 +4,15 @@
       <div id="name">{{ user.name }}</div>
       <div id="bio">{{ user.bio }}</div>
       <div id="country">{{ user.country }}</div>
-    </div>
-    <div class="posts">
       <NuxtLink
         v-if="$auth.loggedIn && $auth.user._id === id"
-        to="/post/new"
+        id="editButton"
+        to="/user/edit"
+        >Edit Profile</NuxtLink
+      >
+    </div>
+    <div class="posts">
+      <NuxtLink v-if="$auth.loggedIn && $auth.user._id === id" to="/post/new"
         >Create New Post</NuxtLink
       >
       <PostCard
@@ -81,6 +85,10 @@ export default {
 #country {
   font-style: italic;
   font-size: 14px;
+}
+
+#editButton {
+  font-size: 12px;
 }
 
 .posts {

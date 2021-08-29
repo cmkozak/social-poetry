@@ -9,5 +9,6 @@ router.delete("/logout", userController.logoutUser);
 router.get("/me", auth, userController.getUserDetails);
 router.get("/getuserinfo/:id", userController.getUserInfo);
 router.get("/getusersettings", userController.getUserSettings);
+router.patch("/updateuser", userController.updateUser);
 
 module.exports = router;

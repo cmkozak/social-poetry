@@ -1,7 +1,7 @@
 <template>
   <nav id="header">
     <div v-if="$auth.loggedIn">
-      <LogoutButton />
+      <a href="/" @click="logoutUser"> Logout </a>
       <NuxtLink :to="`/user/${$auth.user._id}`">Profile</NuxtLink>
     </div>
     <NuxtLink v-else to="/login">Login</NuxtLink>
@@ -11,6 +11,13 @@
 </template>
 
 <script>
+export default {
+  methods: {
+    logoutUser() {
+      this.$auth.logout();
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
