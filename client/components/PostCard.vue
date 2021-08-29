@@ -28,9 +28,11 @@
 </template>
 
 <script>
-import moment from 'moment';
 import swal from 'sweetalert';
+import formatDateMixin from '../mixins/formatdate';
+
 export default {
+  mixins: [formatDateMixin],
   props: {
     post: {
       type: Object,
@@ -42,9 +44,6 @@ export default {
     },
   },
   methods: {
-    formatDate(date) {
-      return moment.utc(date).local().format('dddd, MMM Do YYYY');
-    },
     async deletePost(id) {
       if (confirm('Are you sure you want to delete this post?')) {
         const userToken = localStorage['auth._token.local'];
