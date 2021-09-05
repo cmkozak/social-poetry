@@ -1,10 +1,11 @@
 <template>
   <div>
-    <h2>Create Post</h2>
+    <h2>Edit Post</h2>
     <PostEditor
+      v-if="post.title"
       :title="post.title"
       :content="post.content"
-      @submitPost="createPost"
+      @submitPost="updatePost"
     />
   </div>
 </template>
@@ -21,17 +22,28 @@ export default {
       },
     };
   },
+  async created() {
+    await this.$axios
+      .get(`/post/getPost/${this.$route.params.id}`)
+      .then((response) => {
+        this.post.title = response.data.post.title;
+        this.post.content = response.data.post.content;
+      })
+      .catch((error) => {
+        this.$toast.error(error.message);
+      });
+  },
   mounted() {
     this.post.userToken = localStorage['auth._token.local'];
   },
   methods: {
-    async createPost(title, content) {
+    async updatePost(title, content) {
       this.post.title = title;
       this.post.content = content;
       await this.$axios
-        .post('/post/createPost', this.post)
+        .post('/post/updatePost', this.post)
         .then((res) => {
-          this.$toast.success('Post Creation Successful');
+          this.$toast.success('Post Edited Successfuly');
           this.$router.push(`/post/${res.data.data._id}`);
         })
         .catch((error) => {
@@ -42,10 +54,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-h2 {
-  font-size: 50px;
-  margin: 0;
-  font-weight: bold;
-}
-</style>
+<style lang="scss" scoped></style>

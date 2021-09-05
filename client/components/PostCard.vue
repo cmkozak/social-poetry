@@ -4,7 +4,7 @@
       <div
         v-if="$auth.loggedIn && user._id === $auth.user._id"
         class="delete"
-        @click="deletePost(post._id)"
+        @click.prevent="deletePost(post._id)"
       >
         <img src="../static/trashcan.png" alt="delete post" />
       </div>

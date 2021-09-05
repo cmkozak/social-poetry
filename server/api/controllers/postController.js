@@ -56,8 +56,9 @@ exports.updatePost = async (req, res) => {
       "tokens.token": req.body.userToken,
     });
     if (user && user.id == req.body.user) {
-      const data = await Post.findByIdAndUpdate(req.body.id, req.body, {
-        new: true,
+      const data = await Post.findOneAndUpdate(req.body.id, {
+        "title" : req.body.title,
+        "content" : req.body.content,
       }).lean();
       res.status(201).json({ data });
     } else {

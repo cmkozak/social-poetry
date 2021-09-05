@@ -81,7 +81,7 @@
         </button>
       </div>
       <editor-content :editor="editor" class="editor" />
-      <div v-if="!$v.postContent.editorContent && submitted" class="error">
+      <div v-if="!$v.postContent.required && submitted" class="error">
         Content must not be blank
       </div>
     </div>
@@ -230,6 +230,9 @@ export default {
   height: 500px;
   padding: 7px;
   outline: -webkit-focus-ring-color auto 1px;
+  h1,
+  h2,
+  h3,
   p {
     margin-top: 0;
   }
