@@ -25,6 +25,7 @@
     </form>
   </div>
 </template>
+
 <script>
 import { required } from 'vuelidate/lib/validators';
 
@@ -53,6 +54,7 @@ export default {
       this.$v.$touch();
       this.submitted = true;
       if (this.$v.$invalid) return;
+
       await this.$auth
         .loginWith('local', {
           data: this.login,

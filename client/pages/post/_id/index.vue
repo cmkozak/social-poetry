@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <pre>{{ post }}</pre>
   </div>
 </template>
@@ -25,4 +25,21 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.main {
+  width: 90%;
+  margin: auto;
+  border: 1px white solid;
+  min-height: fit-content;
+  border-radius: 2vw;
+  padding: 40px;
+  border: 1px solid white;
+  background-color: #222222;
+  box-shadow: -4px 4px 3px white;
+  font-size: 18px;
+  line-height: 28px;
+  div {
+    margin-top: 30px;
+  }
+}
+</style>

@@ -38,6 +38,7 @@
     </form>
   </div>
 </template>
+
 <script>
 import {
   required,
@@ -79,6 +80,7 @@ export default {
       this.$v.$touch();
       this.submitted = true;
       if (this.$v.$invalid) return;
+
       await this.$axios
         .post('/user/register', this.register)
         .then(() => {
